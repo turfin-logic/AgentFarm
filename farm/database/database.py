@@ -1384,8 +1384,14 @@ class InMemorySimulationDatabase(SimulationDatabase):
                                 f"WARNING: Memory usage at {usage_ratio:.1%} of limit "
                                 f"({memory_mb:.1f}MB/{self.memory_limit_mb}MB)."
                             )
+                except ValueError:
+                    # Interpreter is shutting down and log streams are closed
+                    break
                 except Exception as e:
-                    logger.error(f"Error in memory monitoring: {e}")
+                    try:
+                        logger.error(f"Error in memory monitoring: {e}")
+                    except ValueError:
+                        break
 
                 # Check every 5 seconds
                 time.sleep(5)
