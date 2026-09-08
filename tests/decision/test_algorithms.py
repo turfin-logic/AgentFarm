@@ -523,10 +523,7 @@ class TestAlgorithmBenchmark(unittest.TestCase):
 
     def test_run_benchmark(self):
         """Test running full benchmark."""
-        # Provide enough time values for logging system and benchmark
-        time_values = [float(i) for i in range(20)]  # More values for logging system
-        with patch("time.time", side_effect=time_values):
-            results = self.benchmark.run_benchmark(seeds=[42, 43])
+        results = self.benchmark.run_benchmark(seeds=[42, 43])
 
         self.assertEqual(len(results), 2)
         self.assertIn("mlp", results)
